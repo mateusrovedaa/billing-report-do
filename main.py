@@ -152,22 +152,54 @@ def render_html(balance_json: dict,
     html.append("const LABELS = " + json.dumps(month_labels) + ";")
     html.append("const VALUES = " + json.dumps(month_values) + ";")
     html.append("""
-let lineChart, barChart;
-function buildCharts(){
-  if(!window.Chart) return;
-  const base = {responsive:true, maintainAspectRatio:true, aspectRatio:1.8, resizeDelay:120};
-  const lineOpts = Object.assign({}, base, {scales:{y:{beginAtZero:true}}});
-  const barOpts  = Object.assign({}, base, {indexAxis:'y', animation:false, animations:false, scales:{x:{beginAtZero:true}, y:{ticks:{autoSkip:false}, afterFit:(scale)=>{ scale.width = 120; }}}});
-  const lctx = document.getElementById('evo').getContext('2d');
-  const hctx = document.getElementById('evo_hbar').getContext('2d');
-  if(lineChart) lineChart.destroy(); if(barChart) barChart.destroy();
-  lineChart = new Chart(lctx, {type:'line', data:{labels:LABELS, datasets:[{label:'Total mensal (USD)', data:VALUES, tension:0.2, fill:false}]}, options:lineOpts});
-  barChart  = new Chart(hctx, {type:'bar',  data:{labels:LABELS, datasets:[{label:'Total por mês (USD)', data:VALUES}]}, options:barOpts});
-}
-function init(){ buildCharts(); }
-if(document.readyState==='loading'){ document.addEventListener('DOMContentLoaded', init); } else { init(); }
-window.addEventListener('resize', ()=>{ if(lineChart) lineChart.resize(); if(barChart) barChart.resize(); }); if(barChart) barChart.resize(); });
-""")
+    let lineChart, barChart;
+
+    function buildCharts(){
+    if(!window.Chart) return;
+    const base = {responsive:true, maintainAspectRatio:true, aspectRatio:1.8, resizeDelay:120};
+    const lineOpts = Object.assign({}, base, {scales:{y:{beginAtZero:true}}});
+    const barOpts  = Object.assign({}, base, {
+        indexAxis:'y',
+        animation:false,
+        animations:false,
+        scales:{
+        x:{beginAtZero:true},
+        y:{ticks:{autoSkip:false}, afterFit:(scale)=>{ scale.width = 120; }}
+        }
+    });
+
+    const lctx = document.getElementById('evo').getContext('2d');
+    const hctx = document.getElementById('evo_hbar').getContext('2d');
+
+    if(lineChart) lineChart.destroy();
+    if(barChart)  barChart.destroy();
+
+    lineChart = new Chart(lctx, {
+        type:'line',
+        data:{ labels: LABELS, datasets:[{ label:'Total mensal (USD)', data: VALUES, tension:0.2, fill:false }]},
+        options: lineOpts
+    });
+
+    barChart = new Chart(hctx, {
+        type:'bar',
+        data:{ labels: LABELS, datasets:[{ label:'Total por mês (USD)', data: VALUES }]},
+        options: barOpts
+    });
+    }
+
+    function init(){ buildCharts(); }
+
+    if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+    } else {
+    init();
+    }
+
+    window.addEventListener('resize', () => {
+    if (lineChart) lineChart.resize();
+    if (barChart)  barChart.resize();
+    });
+    """)
     html.append("</script>")
 
     html.append("</div></body></html>")
