@@ -1,0 +1,14 @@
+# Ignore virtual environment directories
+.venv/
+venv/
+
+# Python cache and artifacts
+__pycache__/
+*.pyc
+
+# Generated HTML report
+billing_report.html
+
+# Environment files
+.env
+.env.local
