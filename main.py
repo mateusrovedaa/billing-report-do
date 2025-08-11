@@ -12,7 +12,7 @@ load_dotenv()
 API = "https://api.digitalocean.com"
 TOKEN = os.environ.get("DIGITALOCEAN_TOKEN")
 if not TOKEN:
-    raise SystemExit("Defina DIGITALOCEAN_TOKEN (em .env ou variável de ambiente)")
+    raise SystemExit("Defina DIGITALOCEAN_TOKEN no .env")
 HEADERS = {"Authorization": f"Bearer {TOKEN}"}
 
 # Funções utilitárias para parsing de valores e datas
