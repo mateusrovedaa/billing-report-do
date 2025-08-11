@@ -136,10 +136,10 @@ def render_html(balance_json: dict,
     html.append(json.dumps(balance_json, indent=2))
     html.append("</pre></details>")
 
-    html.append("<h2>Evolução mensal (linha)</h2>")
+    html.append("<h2>Evolução mensal</h2>")
     html.append("<div class='chart-box' id='box_line'><canvas id='evo'></canvas></div>")
 
-    html.append("<h2>Totais por mês (barras horizontais)</h2>")
+    html.append("<h2>Totais por mês</h2>")
     html.append("<div class='chart-box' id='box_bar'><canvas id='evo_hbar'></canvas></div>")
 
     html.append("<h2>Totais por mês</h2>")
